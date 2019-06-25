@@ -137,26 +137,32 @@ scrollbar_current_goods.config(command=treeview_current_goods.yview)
 # Page Customer
 frame_page_customer = ttk.Frame(frame_right)
 button_add_customer = ttk.Button(frame_page_customer, text="新增客户")
-button_search_customer = ttk.Button(frame_page_customer, text="查找商品")
-label_current_customer = ttk.Label(frame_page_customer, text="当前库存商品：")
+button_search_customer = ttk.Button(frame_page_customer, text="查找客户")
+label_current_customer = ttk.Label(frame_page_customer, text="客户列表：")
 scrollbar_current_customer = ttk.Scrollbar(frame_page_customer)
 treeview_current_customer = ttk.Treeview(frame_page_customer,
                                          height=15,
                                          show="headings")
-treeview_current_customer["columns"] = ("商品编号", "商品种类", "销售价格", "进货价格", "库存余量",
-                                        "单位")
-treeview_current_customer.column("商品编号", anchor='center', width=100)
-treeview_current_customer.column("商品种类", anchor='center', width=100)
-treeview_current_customer.column("销售价格", anchor='center', width=100)
-treeview_current_customer.column("进货价格", anchor='center', width=100)
-treeview_current_customer.column("库存余量", anchor='center', width=100)
-treeview_current_customer.column("单位", anchor='center', width=60)
-treeview_current_customer.heading("商品编号", text="商品编号")
-treeview_current_customer.heading("商品种类", text="商品种类")
-treeview_current_customer.heading("销售价格", text="销售价格")
-treeview_current_customer.heading("进货价格", text="进货价格")
-treeview_current_customer.heading("库存余量", text="库存余量")
-treeview_current_customer.heading("单位", text="单位")
+treeview_current_customer["columns"] = ("编号", "用户名", "昵称", "邮箱", "手机", "地址",
+                                        "用户组", "余额", "状态")
+treeview_current_customer.column("编号", anchor='center', width=40)
+treeview_current_customer.column("用户名", anchor='center', width=60)
+treeview_current_customer.column("昵称", anchor='center', width=60)
+treeview_current_customer.column("邮箱", anchor='center', width=60)
+treeview_current_customer.column("手机", anchor='center', width=60)
+treeview_current_customer.column("地址", anchor='center', width=60)
+treeview_current_customer.column("用户组", anchor='center', width=60)
+treeview_current_customer.column("余额", anchor='center', width=60)
+treeview_current_customer.column("状态", anchor='center', width=60)
+treeview_current_customer.heading("编号", text="编号")
+treeview_current_customer.heading("用户名", text="用户名")
+treeview_current_customer.heading("昵称", text="昵称")
+treeview_current_customer.heading("邮箱", text="邮箱")
+treeview_current_customer.heading("手机", text="手机")
+treeview_current_customer.heading("地址", text="地址")
+treeview_current_customer.heading("用户组", text="用户组")
+treeview_current_customer.heading("余额", text="余额")
+treeview_current_customer.heading("状态", text="状态")
 # Grid Page Widgets
 button_add_customer.grid(column=0, row=0, sticky="w")
 button_search_customer.grid(column=0, row=0, sticky="e")
@@ -167,27 +173,35 @@ scrollbar_current_customer.config(command=treeview_current_customer.yview)
 
 # Page courier
 frame_page_courier = ttk.Frame(frame_right)
-button_add_courier = ttk.Button(frame_page_courier, text="新增客户")
-button_search_courier = ttk.Button(frame_page_courier, text="查找商品")
-label_current_courier = ttk.Label(frame_page_courier, text="当前库存商品：")
+button_add_courier = ttk.Button(frame_page_courier, text="新增配送员")
+button_search_courier = ttk.Button(frame_page_courier, text="查找配送员")
+label_current_courier = ttk.Label(frame_page_courier, text="配送员列表：")
 scrollbar_current_courier = ttk.Scrollbar(frame_page_courier)
 treeview_current_courier = ttk.Treeview(frame_page_courier,
                                         height=15,
                                         show="headings")
-treeview_current_courier["columns"] = ("商品编号", "商品种类", "销售价格", "进货价格", "库存余量",
-                                       "单位")
-treeview_current_courier.column("商品编号", anchor='center', width=100)
-treeview_current_courier.column("商品种类", anchor='center', width=100)
-treeview_current_courier.column("销售价格", anchor='center', width=100)
-treeview_current_courier.column("进货价格", anchor='center', width=100)
-treeview_current_courier.column("库存余量", anchor='center', width=100)
-treeview_current_courier.column("单位", anchor='center', width=60)
-treeview_current_courier.heading("商品编号", text="商品编号")
-treeview_current_courier.heading("商品种类", text="商品种类")
-treeview_current_courier.heading("销售价格", text="销售价格")
-treeview_current_courier.heading("进货价格", text="进货价格")
-treeview_current_courier.heading("库存余量", text="库存余量")
-treeview_current_courier.heading("单位", text="单位")
+treeview_current_courier["columns"] = ("编号", "用户名", "昵称", "邮箱", "手机", "地址",
+                                       "用户组", "递送次数", "薪水", "状态")
+treeview_current_courier.column("编号", anchor='center', width=40)
+treeview_current_courier.column("用户名", anchor='center', width=60)
+treeview_current_courier.column("昵称", anchor='center', width=60)
+treeview_current_courier.column("邮箱", anchor='center', width=60)
+treeview_current_courier.column("手机", anchor='center', width=60)
+treeview_current_courier.column("地址", anchor='center', width=60)
+treeview_current_courier.column("用户组", anchor='center', width=60)
+treeview_current_courier.column("递送次数", anchor='center', width=60)
+treeview_current_courier.column("薪水", anchor='center', width=60)
+treeview_current_courier.column("状态", anchor='center', width=60)
+treeview_current_courier.heading("编号", text="编号")
+treeview_current_courier.heading("用户名", text="用户名")
+treeview_current_courier.heading("昵称", text="昵称")
+treeview_current_courier.heading("邮箱", text="邮箱")
+treeview_current_courier.heading("手机", text="手机")
+treeview_current_courier.heading("地址", text="地址")
+treeview_current_courier.heading("用户组", text="用户组")
+treeview_current_courier.heading("递送次数", text="递送次数")
+treeview_current_courier.heading("薪水", text="薪水")
+treeview_current_courier.heading("状态", text="状态")
 # Grid Page Widgets
 button_add_courier.grid(column=0, row=0, sticky="w")
 button_search_courier.grid(column=0, row=0, sticky="e")
@@ -217,7 +231,7 @@ treeview_current_administrator.column("电子邮箱", anchor='center', width=100
 treeview_current_administrator.column("手机号码", anchor='center', width=60)
 treeview_current_administrator.column("地址", anchor='center', width=60)
 treeview_current_administrator.column("用户组", anchor='center', width=100)
-treeview_current_administrator.column("状态", anchor='center', width=80)
+treeview_current_administrator.column("状态", anchor='center', width=70)
 treeview_current_administrator.heading("编号", text="编号")
 treeview_current_administrator.heading("用户名", text="用户名")
 treeview_current_administrator.heading("昵称", text="昵称")
@@ -227,12 +241,12 @@ treeview_current_administrator.heading("地址", text="地址")
 treeview_current_administrator.heading("用户组", text="用户组")
 treeview_current_administrator.heading("状态", text="状态")
 # Grid Page Widgets
-button_add_administrator.grid(column=0, row=0, sticky="w")
-button_search_administrator.grid(column=1, row=0, sticky="w")
-button_list_administrator.grid(column=2, row=0, sticky="w")
-label_current_administrator.grid(column=0, row=1, columnspan=2, sticky="w")
-treeview_current_administrator.grid(column=0, row=2, columnspan=4)
-scrollbar_current_administrator.grid(column=4, row=2, sticky="nsw")
+button_add_administrator.grid(column=0, row=0, sticky="W")
+button_search_administrator.grid(column=1, row=0, sticky="W")
+button_list_administrator.grid(column=2, row=0, sticky="W")
+label_current_administrator.grid(column=0, row=1, sticky="W")
+treeview_current_administrator.grid(column=0, row=2, columnspan=5)
+scrollbar_current_administrator.grid(column=5, row=2, sticky="nsw")
 scrollbar_current_administrator.config(
     command=treeview_current_administrator.yview)
 
@@ -253,18 +267,6 @@ button_setttings.pack()
 label_showtime.pack()
 label_time.pack()
 frame_page_welcome.pack()
-
-
-def administrator_list_all():
-    administrator_del_all()
-    rest = sy.search_account_administrator('all', '1', 0)
-    for item in rest:
-        treeview_current_administrator.insert(
-            "",
-            0,
-            values=(item['aid'], item['name'], item['screenName'],
-                    item['email'], item['phone'], item['adress'],
-                    item['group'], item['status']))
 
 
 def administrator_del_all():
@@ -326,6 +328,95 @@ def switchAdministrator():
     frame_page_administrator.pack()
 
 
+def administrator_list_all():
+    administrator_del_all()
+    rest = sy.search_account_administrator('all', '1', 0)
+    for item in rest:
+        treeview_current_administrator.insert(
+            "",
+            0,
+            values=(item['aid'], item['name'], item['screenName'],
+                    item['email'], item['phone'], item['adress'],
+                    item['group'], item['status']))
+
+
+def search_administrator_gui():
+    def search_administrator():
+        try:
+            administrator_del_all()
+            rest = sy.search_account_administrator(
+                method_selected.get(), value.get(), 0)
+            for item in rest:
+                treeview_current_administrator.insert(
+                    "",
+                    0,
+                    values=(item['aid'], item['name'], item['screenName'],
+                            item['email'], item['phone'], item['adress'],
+                            item['group'], item['status']))
+            switchAdministrator()
+            searchwindow.destroy()
+            messagebox.showinfo("Success", "Search out!")
+        except Exception as e:
+            messagebox.showerror("Error", e)
+
+    searchwindow = tk.Toplevel()
+    searchwindow.title('管理员搜索')
+    searchwindow.geometry('350x30')
+    method_selected = tk.StringVar()
+    value = tk.StringVar()
+    comboxlist = ttk.Combobox(searchwindow, textvariable=method_selected)
+    comboxlist["values"] = ("name", "screenName", "email", "phone", "adress",
+                            "group", "status")
+    comboxlist.current(0)
+    comboxlist.grid(row=0, sticky='W')
+    tk.Entry(searchwindow, textvariable=value).grid(row=0,
+                                                    column=1,
+                                                    sticky='W')
+    tk.Button(searchwindow, text="搜索",
+              command=search_administrator).grid(row=0, column=2, sticky='W')
+
+
+def add_administrator_gui():
+    def add_administrator():
+        try:
+            administrator_del_all()
+            sy.create_account_administrator(name.get(), screenName.get(),
+                                            email.get(), phone.get(),
+                                            adress.get(), password.get())
+            messagebox.showinfo("Success", "Create a new administrator!")
+        except Exception as e:
+            messagebox.showerror("Error", e)
+
+    addwindow = tk.Toplevel()
+    addwindow.title('添加管理员')
+    addwindow.geometry('220x180')
+    name = tk.StringVar()
+    screenName = tk.StringVar()
+    email = tk.StringVar()
+    phone = tk.StringVar()
+    adress = tk.StringVar()
+    password = tk.StringVar()
+    tk.Label(addwindow, text='用户名：').grid(row=0, sticky='W')
+    tk.Entry(addwindow, textvariable=name).grid(row=0, column=1, sticky='W')
+    tk.Label(addwindow, text='昵称：').grid(row=1, sticky='W')
+    tk.Entry(addwindow, textvariable=screenName).grid(row=1,
+                                                      column=1,
+                                                      sticky='W')
+    tk.Label(addwindow, text='邮箱：').grid(row=2, sticky='W')
+    tk.Entry(addwindow, textvariable=email).grid(row=2, column=1, sticky='W')
+    tk.Label(addwindow, text='手机号码：').grid(row=3, sticky='W')
+    tk.Entry(addwindow, textvariable=phone).grid(row=3, column=1, sticky='W')
+    tk.Label(addwindow, text='地址：').grid(row=4, sticky='W')
+    tk.Entry(addwindow, textvariable=adress).grid(row=4, column=1, sticky='W')
+    tk.Label(addwindow, text='密码：').grid(row=5, sticky='W')
+    tk.Entry(addwindow, show='*', textvariable=password).grid(row=5,
+                                                              column=1,
+                                                              sticky='W')
+    tk.Button(addwindow, text='提交', command=add_administrator).grid(row=6,
+                                                                    column=1,
+                                                                    sticky='E')
+
+
 def login():
     try:
         sy.login(entry_username.get(), entry_password.get(), 'administrator')
@@ -355,22 +446,25 @@ button_customer.config(command=switchCustomer)
 button_courier.config(command=switchCourier)
 button_administrator.config(command=switchAdministrator)
 button_list_administrator.config(command=administrator_list_all)
+button_add_administrator.config(command=add_administrator_gui)
+button_search_administrator.config(command=search_administrator_gui)
 
-window_login = tk.Toplevel()
-window_login.title('登录')
-window_login.geometry('280x200')
-window_login.protocol("WM_DELETE_WINDOW", on_closing_login)
-label_username = ttk.Label(window_login, text='用户名：')
-label_password = ttk.Label(window_login, text='密码：')
-entry_username = ttk.Entry(window_login)
-entry_password = ttk.Entry(window_login, show='*')
-button_login = ttk.Button(window_login, text='登录', command=login)
-button_cancel = ttk.Button(window_login, text='取消', command=cancel)
-label_username.grid(column=0, row=0, pady=10, sticky='E')
-label_password.grid(column=0, row=1, pady=10, sticky='E')
-entry_username.grid(column=1, row=0, sticky='W')
-entry_password.grid(column=1, row=1, sticky='W')
-button_login.grid(column=0, row=2, pady=10, sticky='W')
-button_cancel.grid(column=1, row=2, sticky='E')
-root.withdraw()
-root.mainloop()
+if __name__ == "__main__":
+    window_login = tk.Toplevel()
+    window_login.title('登录')
+    window_login.geometry('280x200')
+    window_login.protocol("WM_DELETE_WINDOW", on_closing_login)
+    label_username = ttk.Label(window_login, text='用户名：')
+    label_password = ttk.Label(window_login, text='密码：')
+    entry_username = ttk.Entry(window_login)
+    entry_password = ttk.Entry(window_login, show='*')
+    button_login = ttk.Button(window_login, text='登录', command=login)
+    button_cancel = ttk.Button(window_login, text='取消', command=cancel)
+    label_username.grid(column=0, row=0, pady=10, sticky='E')
+    label_password.grid(column=0, row=1, pady=10, sticky='E')
+    entry_username.grid(column=1, row=0, sticky='W')
+    entry_password.grid(column=1, row=1, sticky='W')
+    button_login.grid(column=0, row=2, pady=10, sticky='W')
+    button_cancel.grid(column=1, row=2, sticky='E')
+    root.withdraw()
+    root.mainloop()

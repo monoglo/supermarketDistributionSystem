@@ -8,9 +8,6 @@ class System:
     courier = 0
     logined = 0
     logined_identity = 'logout'
-    user = module.User.User('yingrui', 'matrix', '123@gmail.com', '138', 'YSU',
-                            'password')
-    user_group = 'default'
     mysql = module.SupermarketDB.SupermarketDB('localhost', 'root', 'ying8rui',
                                                'supermarket')
 
@@ -133,7 +130,8 @@ class System:
 if __name__ == "__main__":
     sy = System()
     try:
-        a = sy.create_account_courier('htr', 'hhh', '@qq', '133', 'YSU', 'qwerty')
+        a = sy.create_account_courier('htr', 'hhh', '@qq', '133', 'YSU',
+                                      'qwerty')
         print(a)
     except Exception as e:
         print(e)

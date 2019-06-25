@@ -1,6 +1,4 @@
 class User:
-
-    id = 0
     name = ''
     screenName = ''  # User Displayed Name
     email = ''
