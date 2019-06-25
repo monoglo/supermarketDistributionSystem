@@ -80,8 +80,8 @@ class SupermarketDB(object):
             ''' % (aid)
         return self.do_sql(sql)
 
-    def update_administrator(self, aid, name, screenName, email, phone,
-                             adress, password):
+    def update_administrator(self, aid, name, screenName, email, phone, adress,
+                             password):
         sql = '''
             UPDATE `administrators`
             SET `name` = '%s',
@@ -161,6 +161,57 @@ class SupermarketDB(object):
             WHERE `%s` = '%s'
             AND `status` != 'deleted'
             ORDER BY `cuid`
+            DESC
+            ''' % (method, value)
+        return self.do_sql_multi(sql)
+
+    def add_courier(self, name, screenName, email, phone, adress, password):
+        # 添加一条管理员
+        sql = '''
+                INSERT INTO `couriers`
+                (`name`,`screenName`,`email`,`phone`,`adress`,`password`)
+                VALUE ('%s', '%s', '%s', '%s', '%s', '%s')
+            ''' % (name, screenName, email, phone, adress, password)
+        return self.do_sql(sql)
+
+    def delete_courier(self, coid):
+        sql = '''
+            UPDATE `couriers`
+            SET `status` = 'deleted'
+            WHERE `coid` = '%s'
+            ''' % (coid)
+        return self.do_sql(sql)
+
+    def update_courier(self, coid, name, screenName, email, phone, adress,
+                       password):
+        sql = '''
+            UPDATE `couriers`
+            SET `name` = '%s',
+            `screenName` = '%s',
+            `email` = '%s',
+            `phone` = '%s',
+            `adress` = '%s',
+            `password` = '%s'
+            WHERE `coid` = '%s'
+            ''' % (name, screenName, email, phone, adress, password, coid)
+        return self.do_sql(sql)
+
+    def select_courier_singal(self, method, value):
+        sql = '''
+            SELECT *
+            FROM `couriers`
+            WHERE `%s` = '%s'
+            AND `status` = 'normal'
+            ''' % (method, value)
+        return self.do_sql_one(sql)
+
+    def select_courier_multi(self, method, value):
+        sql = '''
+            SELECT *
+            FROM `couriers`
+            WHERE `%s` = '%s'
+            AND `status` != 'deleted'
+            ORDER BY `coid`
             DESC
             ''' % (method, value)
         return self.do_sql_multi(sql)

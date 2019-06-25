@@ -74,6 +74,37 @@ class System:
                 raise Exception('Error:No find such ' + method + '!')
             return cus
 
+    def create_account_courier(self, name, screenName, email, phone, adress,
+                               password):
+        self.mysql.add_courier(name, screenName, email, phone, adress,
+                               password)
+
+    def delete_account_courier(self, coid):
+        self.mysql.delete_courier(coid)
+
+    def update_account_courier(self, coid, name, screenName, email, phone,
+                               adress, password):
+        self.mysql.update_courier(coid, name, screenName, email, phone, adress,
+                                  password)
+
+    def search_account_courier(self, method, value, is_singal):
+        if is_singal == 1:
+            cou = self.mysql.select_courier_singal(method, value)
+            if cou == []:
+                raise Exception('Error:No such ' + method + '!')
+            self.courier = module.User.courier(cou['coid'], cou['name'],
+                                               cou['screenName'], cou['email'],
+                                               cou['phone'], cou['adress'],
+                                               cou['password'], cou['group'],
+                                               cou['deliveryTimes'],
+                                               cou['salary'])
+            return cou
+        else:
+            cou = self.mysql.select_courier_multi(method, value)
+            if cou == []:
+                raise Exception('Error:No find such ' + method + '!')
+            return cou
+
     def login(self, username, password, identity):
         if identity == 'administrator':
             admin = self.search_account_administrator('name', username, 1)
@@ -102,7 +133,7 @@ class System:
 if __name__ == "__main__":
     sy = System()
     try:
-        a = sy.login('yingrui', 'password', 'administrator')
+        a = sy.create_account_courier('htr', 'hhh', '@qq', '133', 'YSU', 'qwerty')
         print(a)
     except Exception as e:
         print(e)
