@@ -102,6 +102,11 @@ class System:
                 raise Exception('Error:No find such ' + method + '!')
             return cou
 
+    def create_good(self, productNumber, name, type, expireDate, createTime,
+                    unit, quantity, price, cost):
+        self.mysql.add_customer(productNumber, name, type, expireDate,
+                                createTime, unit, quantity, price, cost)
+
     def login(self, username, password, identity):
         if identity == 'administrator':
             admin = self.search_account_administrator('name', username, 1)

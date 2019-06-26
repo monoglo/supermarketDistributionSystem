@@ -115,7 +115,7 @@ class SupermarketDB(object):
         return self.do_sql_multi(sql)
 
     def add_customer(self, name, screenName, email, phone, adress, password):
-        # 举个栗子， 添加一条评论
+        # 添加一位客户
         sql = '''
                 INSERT INTO `customers`
                 (`name`,`screenName`,`email`,`phone`,`adress`,`password`)
@@ -166,7 +166,7 @@ class SupermarketDB(object):
         return self.do_sql_multi(sql)
 
     def add_courier(self, name, screenName, email, phone, adress, password):
-        # 添加一条管理员
+        # 添加一条配送员
         sql = '''
                 INSERT INTO `couriers`
                 (`name`,`screenName`,`email`,`phone`,`adress`,`password`)
@@ -215,6 +215,17 @@ class SupermarketDB(object):
             DESC
             ''' % (method, value)
         return self.do_sql_multi(sql)
+
+    def add_good(self, productNumber, name, type, expireDate, createTime, unit,
+                 quantity, price, cost):
+        # 添加一条管理员
+        sql = '''
+                INSERT INTO `goods`
+                (`productNumber`,`name`,`type`,`expireDate`,`createTime`,`unit`,`quantity`,`price`,`cost`)
+                VALUE ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')
+            ''' % (productNumber, name, type, expireDate, createTime, unit,
+                   quantity, price, cost)
+        return self.do_sql(sql)
 
 ########################################################
 

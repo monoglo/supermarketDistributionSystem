@@ -5,16 +5,16 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 
-sy = logic.System()
+sy = logic.System()  # 实例化System对象
 # Basic window settings
-root = tk.Tk()
+root = tk.Tk()  # 根页面初始化
 root.title("超市配送系统")
 root.geometry("700x400")
 # Main frame
-frame_main = ttk.Frame(root, padding="3 3 12 12")
+frame_main = ttk.Frame(root, padding="3 3 12 12")  # 主页面frame
 # Secondry frame
-frame_left = ttk.Frame(frame_main)
-frame_right = ttk.Frame(frame_main)
+frame_left = ttk.Frame(frame_main)  # 左部分frame
+frame_right = ttk.Frame(frame_main)  # 右部分frame
 # Third frame
 frame_left_button = ttk.Frame(frame_left,
                               relief="sunken",
@@ -112,20 +112,29 @@ scrollbar_current_goods = ttk.Scrollbar(frame_page_stock)
 treeview_current_goods = ttk.Treeview(frame_page_stock,
                                       height=15,
                                       show="headings")
-treeview_current_goods["columns"] = ("商品编号", "商品种类", "销售价格", "进货价格", "库存余量",
-                                     "单位")
-treeview_current_goods.column("商品编号", anchor='center', width=100)
-treeview_current_goods.column("商品种类", anchor='center', width=100)
-treeview_current_goods.column("销售价格", anchor='center', width=100)
-treeview_current_goods.column("进货价格", anchor='center', width=100)
-treeview_current_goods.column("库存余量", anchor='center', width=100)
-treeview_current_goods.column("单位", anchor='center', width=60)
+treeview_current_goods["columns"] = ("批次编号", "商品编号", "商品名", "商品种类", "到期时间",
+                                     "进货时间", "单位", "数量", "价格", "成本")
+treeview_current_goods.column("批次编号", anchor='center', width=60)
+treeview_current_goods.column("商品编号", anchor='center', width=60)
+treeview_current_goods.column("商品名", anchor='center', width=60)
+treeview_current_goods.column("商品种类", anchor='center', width=60)
+treeview_current_goods.column("到期时间", anchor='center', width=60)
+treeview_current_goods.column("进货时间", anchor='center', width=60)
+treeview_current_goods.column("单位", anchor='center', width=40)
+treeview_current_goods.column("数量", anchor='center', width=50)
+treeview_current_goods.column("价格", anchor='center', width=60)
+treeview_current_goods.column("成本", anchor='center', width=60)
+
+treeview_current_goods.heading("批次编号", text="批次编号")
 treeview_current_goods.heading("商品编号", text="商品编号")
+treeview_current_goods.heading("商品名", text="商品名")
 treeview_current_goods.heading("商品种类", text="商品种类")
-treeview_current_goods.heading("销售价格", text="销售价格")
-treeview_current_goods.heading("进货价格", text="进货价格")
-treeview_current_goods.heading("库存余量", text="库存余量")
+treeview_current_goods.heading("到期时间", text="到期时间")
+treeview_current_goods.heading("进货时间", text="进货时间")
 treeview_current_goods.heading("单位", text="单位")
+treeview_current_goods.heading("数量", text="数量")
+treeview_current_goods.heading("价格", text="价格")
+treeview_current_goods.heading("成本", text="成本")
 # Grid Page Widgets
 button_add_goods.grid(column=0, row=0, sticky="w")
 button_search_goods.grid(column=0, row=0, sticky="e")
@@ -138,6 +147,7 @@ scrollbar_current_goods.config(command=treeview_current_goods.yview)
 frame_page_customer = ttk.Frame(frame_right)
 button_add_customer = ttk.Button(frame_page_customer, text="新增客户")
 button_search_customer = ttk.Button(frame_page_customer, text="查找客户")
+button_list_customer = ttk.Button(frame_page_customer, text="列出客户")
 label_current_customer = ttk.Label(frame_page_customer, text="客户列表：")
 scrollbar_current_customer = ttk.Scrollbar(frame_page_customer)
 treeview_current_customer = ttk.Treeview(frame_page_customer,
@@ -165,7 +175,8 @@ treeview_current_customer.heading("余额", text="余额")
 treeview_current_customer.heading("状态", text="状态")
 # Grid Page Widgets
 button_add_customer.grid(column=0, row=0, sticky="w")
-button_search_customer.grid(column=0, row=0, sticky="e")
+button_search_customer.grid(column=1, row=0, sticky="w")
+button_list_customer.grid(column=2, row=0, sticky="w")
 label_current_customer.grid(column=0, row=1, columnspan=2, sticky="w")
 treeview_current_customer.grid(column=0, row=2, columnspan=4)
 scrollbar_current_customer.grid(column=4, row=2, sticky="nsw")
@@ -175,6 +186,7 @@ scrollbar_current_customer.config(command=treeview_current_customer.yview)
 frame_page_courier = ttk.Frame(frame_right)
 button_add_courier = ttk.Button(frame_page_courier, text="新增配送员")
 button_search_courier = ttk.Button(frame_page_courier, text="查找配送员")
+button_list_courier = ttk.Button(frame_page_courier, text="列出配送员")
 label_current_courier = ttk.Label(frame_page_courier, text="配送员列表：")
 scrollbar_current_courier = ttk.Scrollbar(frame_page_courier)
 treeview_current_courier = ttk.Treeview(frame_page_courier,
@@ -204,7 +216,8 @@ treeview_current_courier.heading("薪水", text="薪水")
 treeview_current_courier.heading("状态", text="状态")
 # Grid Page Widgets
 button_add_courier.grid(column=0, row=0, sticky="w")
-button_search_courier.grid(column=0, row=0, sticky="e")
+button_search_courier.grid(column=1, row=0, sticky="w")
+button_list_courier.grid(column=2, row=0, sticky="w")
 label_current_courier.grid(column=0, row=1, columnspan=2, sticky="w")
 treeview_current_courier.grid(column=0, row=2, columnspan=4)
 scrollbar_current_courier.grid(column=4, row=2, sticky="nsw")
@@ -269,12 +282,8 @@ label_time.pack()
 frame_page_welcome.pack()
 
 
-def administrator_del_all():
-    for item in treeview_current_administrator.get_children():
-        treeview_current_administrator.delete(item)
-
-
 def trickit():
+    # 时间自动更新
     # Time trick
     currentTime = time.strftime('%Y-%m-%d\n%H:%M:%S',
                                 time.localtime(time.time()))
@@ -284,6 +293,7 @@ def trickit():
 
 
 def switchOrder():
+    # 切换至订单页面
     frame_page_welcome.pack_forget()
     frame_page_stock.pack_forget()
     frame_page_customer.pack_forget()
@@ -293,6 +303,7 @@ def switchOrder():
 
 
 def switchStock():
+    # 切换至库存页面
     frame_page_welcome.pack_forget()
     frame_page_order.pack_forget()
     frame_page_customer.pack_forget()
@@ -302,6 +313,7 @@ def switchStock():
 
 
 def switchCustomer():
+    # 切换至顾客页面
     frame_page_order.pack_forget()
     frame_page_welcome.pack_forget()
     frame_page_stock.pack_forget()
@@ -311,6 +323,7 @@ def switchCustomer():
 
 
 def switchCourier():
+    # 切换至配送员页面
     frame_page_order.pack_forget()
     frame_page_welcome.pack_forget()
     frame_page_stock.pack_forget()
@@ -320,6 +333,7 @@ def switchCourier():
 
 
 def switchAdministrator():
+    # 切换至管理员页面
     frame_page_order.pack_forget()
     frame_page_welcome.pack_forget()
     frame_page_stock.pack_forget()
@@ -328,8 +342,15 @@ def switchAdministrator():
     frame_page_administrator.pack()
 
 
+def del_all_treeview(tree):
+    # 清空administrator的treeview
+    for item in tree.get_children():
+        tree.delete(item)
+
+
 def administrator_list_all():
-    administrator_del_all()
+    # 列出所有管理员
+    del_all_treeview(treeview_current_administrator)
     rest = sy.search_account_administrator('all', '1', 0)
     for item in rest:
         treeview_current_administrator.insert(
@@ -340,12 +361,40 @@ def administrator_list_all():
                     item['group'], item['status']))
 
 
+def customer_list_all():
+    # 列出所有管理员
+    del_all_treeview(treeview_current_customer)
+    rest = sy.search_account_customer('all', '1', 0)
+    for item in rest:
+        treeview_current_customer.insert(
+            "",
+            0,
+            values=(item['cuid'], item['name'], item['screenName'],
+                    item['email'], item['phone'], item['adress'],
+                    item['group'], item['balance'], item['status']))
+
+
+def courier_list_all():
+    # 列出所有管理员
+    del_all_treeview(treeview_current_courier)
+    rest = sy.search_account_courier('all', '1', 0)
+    for item in rest:
+        treeview_current_courier.insert(
+            "",
+            0,
+            values=(item['coid'], item['name'], item['screenName'],
+                    item['email'], item['phone'], item['adress'],
+                    item['group'], item['deliveryTimes'], item['salary'],
+                    item['status']))
+
+
 def search_administrator_gui():
+    # 搜索栏
     def search_administrator():
         try:
-            administrator_del_all()
-            rest = sy.search_account_administrator(
-                method_selected.get(), value.get(), 0)
+            del_all_treeview(treeview_current_administrator)
+            rest = sy.search_account_administrator(method_selected.get(),
+                                                   value.get(), 0)
             for item in rest:
                 treeview_current_administrator.insert(
                     "",
@@ -376,14 +425,91 @@ def search_administrator_gui():
               command=search_administrator).grid(row=0, column=2, sticky='W')
 
 
+def search_customer_gui():
+    # 搜索栏
+    def search_customer():
+        try:
+            del_all_treeview(treeview_current_customer)
+            rest = sy.search_account_customer(method_selected.get(),
+                                              value.get(), 0)
+            for item in rest:
+                treeview_current_customer.insert(
+                    "",
+                    0,
+                    values=(item['cuid'], item['name'], item['screenName'],
+                            item['email'], item['phone'], item['adress'],
+                            item['group'], item['status']))
+            switchCustomer()
+            searchwindow.destroy()
+            messagebox.showinfo("Success", "Search out!")
+        except Exception as e:
+            messagebox.showerror("Error", e)
+
+    searchwindow = tk.Toplevel()
+    searchwindow.title('管理员搜索')
+    searchwindow.geometry('350x30')
+    method_selected = tk.StringVar()
+    value = tk.StringVar()
+    comboxlist = ttk.Combobox(searchwindow, textvariable=method_selected)
+    comboxlist["values"] = ("name", "screenName", "email", "phone", "adress",
+                            "group", "status")
+    comboxlist.current(0)
+    comboxlist.grid(row=0, sticky='W')
+    tk.Entry(searchwindow, textvariable=value).grid(row=0,
+                                                    column=1,
+                                                    sticky='W')
+    tk.Button(searchwindow, text="搜索",
+              command=search_customer).grid(row=0, column=2, sticky='W')
+
+
+def search_courier_gui():
+    # 搜索栏
+    def search_courier():
+        try:
+            del_all_treeview(treeview_current_courier)
+            rest = sy.search_account_courier(method_selected.get(),
+                                             value.get(), 0)
+            for item in rest:
+                treeview_current_courier.insert(
+                    "",
+                    0,
+                    values=(item['cuid'], item['name'], item['screenName'],
+                            item['email'], item['phone'], item['adress'],
+                            item['group'], item['status']))
+            switchCourier()
+            searchwindow.destroy()
+            messagebox.showinfo("Success", "Search out!")
+        except Exception as e:
+            messagebox.showerror("Error", e)
+
+    searchwindow = tk.Toplevel()
+    searchwindow.title('配送员搜索')
+    searchwindow.geometry('350x30')
+    method_selected = tk.StringVar()
+    value = tk.StringVar()
+    comboxlist = ttk.Combobox(searchwindow, textvariable=method_selected)
+    comboxlist["values"] = ("name", "screenName", "email", "phone", "adress",
+                            "group", "status")
+    comboxlist.current(0)
+    comboxlist.grid(row=0, sticky='W')
+    tk.Entry(searchwindow, textvariable=value).grid(row=0,
+                                                    column=1,
+                                                    sticky='W')
+    tk.Button(searchwindow, text="搜索", command=search_courier).grid(row=0,
+                                                                    column=2,
+                                                                    sticky='W')
+
+
 def add_administrator_gui():
+    # 添加管理员
     def add_administrator():
         try:
-            administrator_del_all()
+            del_all_treeview(treeview_current_administrator)
             sy.create_account_administrator(name.get(), screenName.get(),
                                             email.get(), phone.get(),
                                             adress.get(), password.get())
             messagebox.showinfo("Success", "Create a new administrator!")
+            addwindow.destroy()
         except Exception as e:
             messagebox.showerror("Error", e)
 
@@ -417,7 +543,94 @@ def add_administrator_gui():
                                                                     sticky='E')
 
 
+def add_customer_gui():
+    # 添加客户
+    def add_customer():
+        try:
+            del_all_treeview(treeview_current_customer)
+            sy.create_account_customer(name.get(), screenName.get(),
+                                       email.get(), phone.get(), adress.get(),
+                                       password.get())
+            messagebox.showinfo("Success", "Create a new customer!")
+            addwindow.destroy()
+        except Exception as e:
+            messagebox.showerror("Error", e)
+
+    addwindow = tk.Toplevel()
+    addwindow.title('添加客户')
+    addwindow.geometry('220x180')
+    name = tk.StringVar()
+    screenName = tk.StringVar()
+    email = tk.StringVar()
+    phone = tk.StringVar()
+    adress = tk.StringVar()
+    password = tk.StringVar()
+    tk.Label(addwindow, text='用户名：').grid(row=0, sticky='W')
+    tk.Entry(addwindow, textvariable=name).grid(row=0, column=1, sticky='W')
+    tk.Label(addwindow, text='昵称：').grid(row=1, sticky='W')
+    tk.Entry(addwindow, textvariable=screenName).grid(row=1,
+                                                      column=1,
+                                                      sticky='W')
+    tk.Label(addwindow, text='邮箱：').grid(row=2, sticky='W')
+    tk.Entry(addwindow, textvariable=email).grid(row=2, column=1, sticky='W')
+    tk.Label(addwindow, text='手机号码：').grid(row=3, sticky='W')
+    tk.Entry(addwindow, textvariable=phone).grid(row=3, column=1, sticky='W')
+    tk.Label(addwindow, text='地址：').grid(row=4, sticky='W')
+    tk.Entry(addwindow, textvariable=adress).grid(row=4, column=1, sticky='W')
+    tk.Label(addwindow, text='密码：').grid(row=5, sticky='W')
+    tk.Entry(addwindow, show='*', textvariable=password).grid(row=5,
+                                                              column=1,
+                                                              sticky='W')
+    tk.Button(addwindow, text='提交', command=add_customer).grid(row=6,
+                                                               column=1,
+                                                               sticky='E')
+
+
+def add_courier_gui():
+    # 添加客户
+    def add_courier():
+        try:
+            del_all_treeview(treeview_current_courier)
+            sy.create_account_courier(name.get(), screenName.get(),
+                                      email.get(), phone.get(), adress.get(),
+                                      password.get())
+            messagebox.showinfo("Success", "Create a new courier!")
+            addwindow.destroy()
+        except Exception as e:
+            messagebox.showerror("Error", e)
+
+    addwindow = tk.Toplevel()
+    addwindow.title('添加客户')
+    addwindow.geometry('220x180')
+    name = tk.StringVar()
+    screenName = tk.StringVar()
+    email = tk.StringVar()
+    phone = tk.StringVar()
+    adress = tk.StringVar()
+    password = tk.StringVar()
+    tk.Label(addwindow, text='用户名：').grid(row=0, sticky='W')
+    tk.Entry(addwindow, textvariable=name).grid(row=0, column=1, sticky='W')
+    tk.Label(addwindow, text='昵称：').grid(row=1, sticky='W')
+    tk.Entry(addwindow, textvariable=screenName).grid(row=1,
+                                                      column=1,
+                                                      sticky='W')
+    tk.Label(addwindow, text='邮箱：').grid(row=2, sticky='W')
+    tk.Entry(addwindow, textvariable=email).grid(row=2, column=1, sticky='W')
+    tk.Label(addwindow, text='手机号码：').grid(row=3, sticky='W')
+    tk.Entry(addwindow, textvariable=phone).grid(row=3, column=1, sticky='W')
+    tk.Label(addwindow, text='地址：').grid(row=4, sticky='W')
+    tk.Entry(addwindow, textvariable=adress).grid(row=4, column=1, sticky='W')
+    tk.Label(addwindow, text='密码：').grid(row=5, sticky='W')
+    tk.Entry(addwindow, show='*', textvariable=password).grid(row=5,
+                                                              column=1,
+                                                              sticky='W')
+    tk.Button(addwindow, text='提交', command=add_courier).grid(row=6,
+                                                              column=1,
+                                                              sticky='E')
+
+
 def login():
+    # 登录
     try:
         sy.login(entry_username.get(), entry_password.get(), 'administrator')
         label_welcome['text'] = 'Welcome ' + sy.logined['screenName'] + '!'
@@ -428,12 +641,14 @@ def login():
 
 
 def cancel():
+    # 取消
     window_login.destroy()  # Removes the toplevel window
     root.destroy()  # Removes the hidden root window
     sys.exit()
 
 
 def on_closing_login():
+    # 登陆页面关闭执行destroy
     window_login.destroy()  # Removes the toplevel window
     root.destroy()  # Removes the hidden root window
     sys.exit()
@@ -448,6 +663,12 @@ button_administrator.config(command=switchAdministrator)
 button_list_administrator.config(command=administrator_list_all)
 button_add_administrator.config(command=add_administrator_gui)
 button_search_administrator.config(command=search_administrator_gui)
+button_list_customer.config(command=customer_list_all)
+button_add_customer.config(command=add_customer_gui)
+button_search_customer.config(command=search_customer_gui)
+button_list_courier.config(command=courier_list_all)
+button_add_courier.config(command=add_courier_gui)
+button_search_courier.config(command=search_courier_gui)
 
 if __name__ == "__main__":
     window_login = tk.Toplevel()
