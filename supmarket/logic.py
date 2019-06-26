@@ -102,10 +102,25 @@ class System:
                 raise Exception('Error:No find such ' + method + '!')
             return cou
 
-    def create_good(self, productNumber, name, type, expireDate, createTime,
-                    unit, quantity, price, cost):
-        self.mysql.add_customer(productNumber, name, type, expireDate,
-                                createTime, unit, quantity, price, cost)
+    def create_good(self, productNumber, name, type, expireDate, unit,
+                    quantity, price, cost):
+        self.mysql.add_good(productNumber, name, type, expireDate, unit,
+                            quantity, price, cost)
+
+    def delete_good(self, gid):
+        self.mysql.delete_good(gid)
+
+    def search_good(self, method, value, is_singal):
+        if is_singal == 1:
+            goo = self.mysql.select_good_singal(method, value)
+            if goo == []:
+                raise Exception('Error:No such ' + method + '!')
+            return goo
+        else:
+            goo = self.mysql.select_good_multi(method, value)
+            if goo == []:
+                raise Exception('Error:No find such ' + method + '!')
+            return goo
 
     def login(self, username, password, identity):
         if identity == 'administrator':
@@ -135,8 +150,7 @@ class System:
 if __name__ == "__main__":
     sy = System()
     try:
-        a = sy.create_account_courier('htr', 'hhh', '@qq', '133', 'YSU',
-                                      'qwerty')
+        a = sy.search_good('name', 'water', 0)
         print(a)
     except Exception as e:
         print(e)

@@ -107,6 +107,7 @@ scrollbar_completed_order.config(command=treeview_completed_order.yview)
 frame_page_stock = ttk.Frame(frame_right)
 button_add_goods = ttk.Button(frame_page_stock, text="新增商品")
 button_search_goods = ttk.Button(frame_page_stock, text="查找商品")
+button_list_goods = ttk.Button(frame_page_stock, text="列出商品")
 label_current_goods = ttk.Label(frame_page_stock, text="当前库存商品：")
 scrollbar_current_goods = ttk.Scrollbar(frame_page_stock)
 treeview_current_goods = ttk.Treeview(frame_page_stock,
@@ -137,7 +138,8 @@ treeview_current_goods.heading("价格", text="价格")
 treeview_current_goods.heading("成本", text="成本")
 # Grid Page Widgets
 button_add_goods.grid(column=0, row=0, sticky="w")
-button_search_goods.grid(column=0, row=0, sticky="e")
+button_search_goods.grid(column=1, row=0, sticky="w")
+button_list_goods.grid(column=2, row=0, sticky="w")
 label_current_goods.grid(column=0, row=1, columnspan=2, sticky="w")
 treeview_current_goods.grid(column=0, row=2, columnspan=4)
 scrollbar_current_goods.grid(column=4, row=2, sticky="nsw")
@@ -292,54 +294,14 @@ def trickit():
     label_time.after(1000, trickit)
 
 
-def switchOrder():
-    # 切换至订单页面
+def switchPage(page):
     frame_page_welcome.pack_forget()
     frame_page_stock.pack_forget()
     frame_page_customer.pack_forget()
     frame_page_courier.pack_forget()
     frame_page_administrator.pack_forget()
-    frame_page_order.pack()
-
-
-def switchStock():
-    # 切换至库存页面
-    frame_page_welcome.pack_forget()
     frame_page_order.pack_forget()
-    frame_page_customer.pack_forget()
-    frame_page_courier.pack_forget()
-    frame_page_administrator.pack_forget()
-    frame_page_stock.pack()
-
-
-def switchCustomer():
-    # 切换至顾客页面
-    frame_page_order.pack_forget()
-    frame_page_welcome.pack_forget()
-    frame_page_stock.pack_forget()
-    frame_page_courier.pack_forget()
-    frame_page_administrator.pack_forget()
-    frame_page_customer.pack()
-
-
-def switchCourier():
-    # 切换至配送员页面
-    frame_page_order.pack_forget()
-    frame_page_welcome.pack_forget()
-    frame_page_stock.pack_forget()
-    frame_page_customer.pack_forget()
-    frame_page_administrator.pack_forget()
-    frame_page_courier.pack()
-
-
-def switchAdministrator():
-    # 切换至管理员页面
-    frame_page_order.pack_forget()
-    frame_page_welcome.pack_forget()
-    frame_page_stock.pack_forget()
-    frame_page_customer.pack_forget()
-    frame_page_courier.pack_forget()
-    frame_page_administrator.pack()
+    page.pack()
 
 
 def del_all_treeview(tree):
@@ -388,6 +350,20 @@ def courier_list_all():
                     item['status']))
 
 
+def good_list_all():
+    # 列出所有管理员
+    del_all_treeview(treeview_current_goods)
+    rest = sy.search_good('all', '1', 0)
+    for item in rest:
+        treeview_current_goods.insert(
+            "",
+            0,
+            values=(item['gid'], item['productNumber'], item['name'],
+                    item['type'], item['expireDate'], item['createTime'],
+                    item['unit'], item['quantity'], item['price'],
+                    item['cost']))
+
+
 def search_administrator_gui():
     # 搜索栏
     def search_administrator():
@@ -402,7 +378,7 @@ def search_administrator_gui():
                     values=(item['aid'], item['name'], item['screenName'],
                             item['email'], item['phone'], item['adress'],
                             item['group'], item['status']))
-            switchAdministrator()
+            switchPage(frame_page_administrator)
             searchwindow.destroy()
             messagebox.showinfo("Success", "Search out!")
         except Exception as e:
@@ -439,7 +415,7 @@ def search_customer_gui():
                     values=(item['cuid'], item['name'], item['screenName'],
                             item['email'], item['phone'], item['adress'],
                             item['group'], item['status']))
-            switchCustomer()
+            switchPage(frame_page_customer)
             searchwindow.destroy()
             messagebox.showinfo("Success", "Search out!")
         except Exception as e:
@@ -476,7 +452,7 @@ def search_courier_gui():
                     values=(item['cuid'], item['name'], item['screenName'],
                             item['email'], item['phone'], item['adress'],
                             item['group'], item['status']))
-            switchCourier()
+            switchPage(frame_page_courier)
             searchwindow.destroy()
             messagebox.showinfo("Success", "Search out!")
         except Exception as e:
@@ -541,6 +517,45 @@ def add_administrator_gui():
     tk.Button(addwindow, text='提交', command=add_administrator).grid(row=6,
                                                                     column=1,
                                                                     sticky='E')
+
+
+def search_good_gui():
+    # 搜索栏
+    def search_good():
+        try:
+            del_all_treeview(treeview_current_goods)
+            rest = sy.search_good(method_selected.get(), value.get(), 0)
+            for item in rest:
+                treeview_current_goods.insert(
+                    "",
+                    0,
+                    values=(item['gid'], item['productNumber'], item['name'],
+                            item['type'], item['expireDate'],
+                            item['createTime'], item['unit'], item['quantity'],
+                            item['price'], item['cost']))
+            switchPage(frame_page_stock)
+            searchwindow.destroy()
+            messagebox.showinfo("Success", "Search out!")
+        except Exception as e:
+            messagebox.showerror("Error", e)
+
+    searchwindow = tk.Toplevel()
+    searchwindow.title('库存搜索')
+    searchwindow.geometry('350x30')
+    method_selected = tk.StringVar()
+    value = tk.StringVar()
+    comboxlist = ttk.Combobox(searchwindow, textvariable=method_selected)
+    comboxlist["values"] = ('gid', 'productNumber', 'name', 'type',
+                            'expireDate', 'createTime', 'unit', 'quantity',
+                            'price', 'cost')
+    comboxlist.current(0)
+    comboxlist.grid(row=0, sticky='W')
+    tk.Entry(searchwindow, textvariable=value).grid(row=0,
+                                                    column=1,
+                                                    sticky='W')
+    tk.Button(searchwindow, text="搜索", command=search_good).grid(row=0,
+                                                                 column=2,
+                                                                 sticky='W')
 
 
 def add_customer_gui():
@@ -629,6 +644,57 @@ def add_courier_gui():
                                                               sticky='E')
 
 
+def add_good_gui():
+    # 添加商品批次
+    def add_good():
+        try:
+            del_all_treeview(treeview_current_goods)
+            sy.create_good(productName.get(), name.get(), type.get(),
+                           expireTime.get(), unit.get(), quantity.get(),
+                           price.get(), cost.get())
+            messagebox.showinfo("Success", "Create a new good!")
+            addwindow.destroy()
+        except Exception as e:
+            messagebox.showerror("Error", e)
+
+    addwindow = tk.Toplevel()
+    addwindow.title('添加商品批次')
+    addwindow.geometry('220x220')
+    productName = tk.StringVar()
+    name = tk.StringVar()
+    type = tk.StringVar()
+    expireTime = tk.StringVar()
+    unit = tk.StringVar()
+    quantity = tk.StringVar()
+    price = tk.StringVar()
+    cost = tk.StringVar()
+    tk.Label(addwindow, text='商品编号：').grid(row=0, sticky='W')
+    tk.Entry(addwindow, textvariable=productName).grid(row=0,
+                                                       column=1,
+                                                       sticky='W')
+    tk.Label(addwindow, text='商品名：').grid(row=1, sticky='W')
+    tk.Entry(addwindow, textvariable=name).grid(row=1, column=1, sticky='W')
+    tk.Label(addwindow, text='商品种类：').grid(row=2, sticky='W')
+    tk.Entry(addwindow, textvariable=type).grid(row=2, column=1, sticky='W')
+    tk.Label(addwindow, text='到期时间：').grid(row=3, sticky='W')
+    tk.Entry(addwindow, textvariable=expireTime).grid(row=3,
+                                                      column=1,
+                                                      sticky='W')
+    tk.Label(addwindow, text='单位：').grid(row=4, sticky='W')
+    tk.Entry(addwindow, textvariable=unit).grid(row=4, column=1, sticky='W')
+    tk.Label(addwindow, text='数量：').grid(row=5, sticky='W')
+    tk.Entry(addwindow, textvariable=quantity).grid(row=5,
+                                                    column=1,
+                                                    sticky='W')
+    tk.Label(addwindow, text='价格').grid(row=6, sticky='W')
+    tk.Entry(addwindow, textvariable=price).grid(row=6, column=1, sticky='W')
+    tk.Label(addwindow, text='成本').grid(row=7, sticky='W')
+    tk.Entry(addwindow, textvariable=cost).grid(row=7, column=1, sticky='W')
+    tk.Button(addwindow, text='提交', command=add_good).grid(row=8,
+                                                           column=1,
+                                                           sticky='E')
+
+
 def login():
     # 登录
     try:
@@ -655,11 +721,12 @@ def on_closing_login():
 
 
 label_time.after(1000, trickit)
-button_order.config(command=switchOrder)
-button_stock.config(command=switchStock)
-button_customer.config(command=switchCustomer)
-button_courier.config(command=switchCourier)
-button_administrator.config(command=switchAdministrator)
+button_order.config(command=lambda: switchPage(frame_page_order))
+button_stock.config(command=lambda: switchPage(frame_page_stock))
+button_customer.config(command=lambda: switchPage(frame_page_customer))
+button_courier.config(command=lambda: switchPage(frame_page_courier))
+button_administrator.config(
+    command=lambda: switchPage(frame_page_administrator))
 button_list_administrator.config(command=administrator_list_all)
 button_add_administrator.config(command=add_administrator_gui)
 button_search_administrator.config(command=search_administrator_gui)
@@ -669,6 +736,9 @@ button_search_customer.config(command=search_customer_gui)
 button_list_courier.config(command=courier_list_all)
 button_add_courier.config(command=add_courier_gui)
 button_search_courier.config(command=search_courier_gui)
+button_list_goods.config(command=good_list_all)
+button_add_goods.config(command=add_good_gui)
+button_search_goods.config(command=search_good_gui)
 
 if __name__ == "__main__":
     window_login = tk.Toplevel()

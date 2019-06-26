@@ -216,16 +216,61 @@ class SupermarketDB(object):
             ''' % (method, value)
         return self.do_sql_multi(sql)
 
-    def add_good(self, productNumber, name, type, expireDate, createTime, unit,
-                 quantity, price, cost):
+    def add_good(self, productNumber, name, type, expireDate, unit, quantity,
+                 price, cost):
         # 添加一条管理员
         sql = '''
                 INSERT INTO `goods`
-                (`productNumber`,`name`,`type`,`expireDate`,`createTime`,`unit`,`quantity`,`price`,`cost`)
-                VALUE ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')
-            ''' % (productNumber, name, type, expireDate, createTime, unit,
-                   quantity, price, cost)
+                (`productNumber`,`name`,`type`,`expireDate`,`unit`,`quantity`,`price`,`cost`)
+                VALUE ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')
+            ''' % (productNumber, name, type, expireDate, unit, quantity,
+                   price, cost)
         return self.do_sql(sql)
+
+    def delete_good(self, gid):
+        sql = '''
+            UPDATE `goods`
+            SET `quantity` = '0'
+            WHERE `gid` = '%s'
+            ''' % (gid)
+        return self.do_sql(sql)
+
+    def update_good(self, gid, productNumber, name, type, expireDate, unit,
+                    quantity, price, cost):
+        sql = '''
+                UPDATE `goods`
+                SET `productNumber` = '%s',
+                `name` = '%s',
+                `type` = '%s',
+                `expireDate` = '%s',
+                `unit` = '%s',
+                `quantity` = '%s',
+                `price` = '%s',
+                `cost` = '%s'
+                WHERE `gid` = '%s'
+                ''' % (productNumber, name, type, expireDate, unit, quantity,
+                       price, cost, gid)
+        return self.do_sql(sql)
+
+    def select_good_singal(self, method, value):
+        sql = '''
+            SELECT *
+            FROM `goods`
+            WHERE `%s` = '%s'
+            AND `quantity` >= '0'
+            ''' % (method, value)
+        return self.do_sql_one(sql)
+
+    def select_good_multi(self, method, value):
+        sql = '''
+            SELECT *
+            FROM `goods`
+            WHERE `%s` = '%s'
+            AND `quantity` >= '0'
+            ORDER BY `gid`
+            DESC
+            ''' % (method, value)
+        return self.do_sql_multi(sql)
 
 ########################################################
 
