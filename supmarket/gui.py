@@ -1,11 +1,11 @@
 import time
-import logic
+import system
 import sys
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 
-sy = logic.System()  # 实例化System对象
+sy = system.System()  # 实例化System对象
 # Basic window settings
 root = tk.Tk()  # 根页面初始化
 root.title("超市配送系统")
