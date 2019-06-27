@@ -1,9 +1,11 @@
 import pymysql
+import time
 
 
 class SupermarketDB(object):
     def __init__(self, ip, username, passwd, database):
         self.get_conn(ip, username, passwd, database)
+        self.today = time.strftime("%Y-%m-%d")
 
     def get_conn(self, ip, username, passwd, database):
         try:
@@ -266,11 +268,71 @@ class SupermarketDB(object):
             SELECT *
             FROM `goods`
             WHERE `%s` = '%s'
-            AND `quantity` >= '0'
+            AND `quantity` > '0'
             ORDER BY `gid`
             DESC
             ''' % (method, value)
         return self.do_sql_multi(sql)
+
+    def select_outdate_good_multi(self, method, value):
+        sql = '''
+            SELECT *
+            FROM `goods`
+            WHERE `%s` = '%s'
+            AND `expireDate` <= '%s'
+            AND `quantity` > '0'
+            ORDER BY `gid`
+            DESC
+            ''' % (method, value, self.today)
+        return self.do_sql_multi(sql)
+
+    def add_order(self, cuid):
+        sql = '''
+                INSERT INTO `orders`
+                (`cuid`)
+                VALUE ('%s')
+            ''' % (cuid)
+        self.do_sql(sql)
+        sql2 = 'SELECT LAST_INSERT_ID()'
+        oid = self.do_sql_one(sql2)['LAST_INSERT_ID()']
+        return self.select_order_singal('oid', oid)
+
+    def add_order_item(self, oid, gid, productNumber, unit, quantity, price,
+                       amount):
+        sql = '''
+                INSERT INTO `orderitems`
+                (`oid`,`gid`,`productNumber`,`unit`,`quantity`,`price`,`amount`)
+                VALUE ('%s', '%s', '%s', '%s', '%s', '%s', '%s')
+            ''' % (oid, gid, productNumber, unit, quantity, price, amount)
+        return self.do_sql(sql)
+
+    def select_order_singal(self, method, value):
+        sql = '''
+            SELECT *
+            FROM `orders`
+            WHERE `%s` = '%s'
+            AND `status` != 'deleted'
+            ''' % (method, value)
+        return self.do_sql_one(sql)
+
+    def select_order_multi(self, method, value):
+        sql = '''
+            SELECT *
+            FROM `orders`
+            WHERE `%s` = '%s'
+            AND `status` != 'deleted'
+            ORDER BY `oid`
+            DESC
+            ''' % (method, value)
+        return self.do_sql_multi(sql)
+
+    def delete_order(self, oid):
+        sql = '''
+            UPDATE `orders`
+            SET `status` = 'deleted'
+            WHERE `oid` = '%s'
+            ''' % (oid)
+        return self.do_sql(sql)
 
 ########################################################
 

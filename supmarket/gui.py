@@ -50,64 +50,74 @@ label_welcome.pack()
 frame_page_order = ttk.Frame(frame_right)
 button_create_order = ttk.Button(frame_page_order, text="创建订单")
 button_search_order = ttk.Button(frame_page_order, text="查找订单")
+button_list_order = ttk.Button(frame_page_order, text="列出订单")
 label_active_order = ttk.Label(frame_page_order, text="正在进行中的订单：")
 # Active order Treeview
 scrollbar_active_order = ttk.Scrollbar(frame_page_order)
-treeview_active_order = ttk.Treeview(frame_page_order,
-                                     height=7,
-                                     show="headings")
-treeview_active_order["columns"] = ("订单编号", "购买人", "总金额", "下单时间", "当前状态")
+treeview_active_orders = ttk.Treeview(frame_page_order,
+                                      height=6,
+                                      show="headings")
+treeview_active_orders["columns"] = ("订单编号", "购买人", "总金额", "下单时间", "配送员",
+                                     "当前状态")
 # 设置每列宽度和对齐方式
-treeview_active_order.column("订单编号", anchor='center', width=100)
-treeview_active_order.column("购买人", anchor='center', width=60)
-treeview_active_order.column("总金额", anchor='center', width=60)
-treeview_active_order.column("下单时间", anchor='center', width=100)
-treeview_active_order.column("当前状态", anchor='center', width=100)
+treeview_active_orders.column("订单编号", anchor='center', width=60)
+treeview_active_orders.column("购买人", anchor='center', width=60)
+treeview_active_orders.column("总金额", anchor='center', width=60)
+treeview_active_orders.column("下单时间", anchor='center', width=130)
+treeview_active_orders.column("配送员", anchor='center', width=60)
+treeview_active_orders.column("当前状态", anchor='center', width=60)
 # 设置每列表头标题文本
-treeview_active_order.heading("订单编号", text="订单编号")
-treeview_active_order.heading("购买人", text="购买人")
-treeview_active_order.heading("总金额", text="总金额")
-treeview_active_order.heading("下单时间", text="下单时间")
-treeview_active_order.heading("当前状态", text="当前状态")
+treeview_active_orders.heading("订单编号", text="订单编号")
+treeview_active_orders.heading("购买人", text="购买人")
+treeview_active_orders.heading("总金额", text="总金额")
+treeview_active_orders.heading("下单时间", text="下单时间")
+treeview_active_orders.heading("配送员", text="配送员")
+treeview_active_orders.heading("当前状态", text="当前状态")
 label_completed_order = ttk.Label(frame_page_order, text="已完成的订单：")
 # Completed order Treeview
 scrollbar_completed_order = ttk.Scrollbar(frame_page_order)
-treeview_completed_order = ttk.Treeview(frame_page_order,
-                                        height=6,
-                                        show="headings")
-treeview_completed_order["columns"] = ("订单编号", "购买人", "总金额", "下单时间", "完成时间",
-                                       "完成状态")
+treeview_completed_orders = ttk.Treeview(frame_page_order,
+                                         height=6,
+                                         show="headings")
+treeview_completed_orders["columns"] = ("订单编号", "购买人", "总金额", "下单时间", "完成时间",
+                                        "配送员", "完成状态")
 # 设置每列宽度和对齐方式
-treeview_completed_order.column("订单编号", anchor='center', width=100)
-treeview_completed_order.column("购买人", anchor='center', width=60)
-treeview_completed_order.column("总金额", anchor='center', width=60)
-treeview_completed_order.column("下单时间", anchor='center', width=100)
-treeview_completed_order.column("完成时间", anchor='center', width=100)
-treeview_completed_order.column("完成状态", anchor='center', width=100)
+treeview_completed_orders.column("订单编号", anchor='center', width=60)
+treeview_completed_orders.column("购买人", anchor='center', width=60)
+treeview_completed_orders.column("总金额", anchor='center', width=60)
+treeview_completed_orders.column("下单时间", anchor='center', width=130)
+treeview_completed_orders.column("完成时间", anchor='center', width=130)
+treeview_completed_orders.column("配送员", anchor='center', width=60)
+treeview_completed_orders.column("完成状态", anchor='center', width=60)
 # 设置每列表头标题文本
-treeview_completed_order.heading("订单编号", text="订单编号")
-treeview_completed_order.heading("购买人", text="购买人")
-treeview_completed_order.heading("总金额", text="总金额")
-treeview_completed_order.heading("下单时间", text="下单时间")
-treeview_completed_order.heading("完成时间", text="完成时间")
-treeview_completed_order.heading("完成状态", text="当前状态")
+treeview_completed_orders.heading("订单编号", text="订单编号")
+treeview_completed_orders.heading("购买人", text="购买人")
+treeview_completed_orders.heading("总金额", text="总金额")
+treeview_completed_orders.heading("下单时间", text="下单时间")
+treeview_completed_orders.heading("完成时间", text="完成时间")
+treeview_completed_orders.heading("配送员", text="配送员")
+treeview_completed_orders.heading("完成状态", text="当前状态")
 # Grid Page Widgets
 button_create_order.grid(column=0, row=0, sticky="w")
-button_search_order.grid(column=0, row=0, sticky="e")
+button_search_order.grid(column=1, row=0, sticky="w")
+button_list_order.grid(column=2, row=0, sticky="w")
 label_active_order.grid(column=0, row=1, columnspan=2, sticky="w")
-treeview_active_order.grid(column=0, row=2, columnspan=3)
+treeview_active_orders.grid(column=0, row=2, columnspan=3)
 scrollbar_active_order.grid(column=3, row=2, sticky="nsw")
-scrollbar_active_order.config(command=treeview_active_order.yview)
+scrollbar_active_order.config(command=treeview_active_orders.yview)
 label_completed_order.grid(column=0, row=3, columnspan=2, sticky="w")
-treeview_completed_order.grid(column=0, row=4, columnspan=4)
-scrollbar_completed_order.grid(column=4, row=4, sticky="nsw")
-scrollbar_completed_order.config(command=treeview_completed_order.yview)
+treeview_completed_orders.grid(column=0, row=4, columnspan=5)
+scrollbar_completed_order.grid(column=5, row=4, sticky="nsw")
+scrollbar_completed_order.config(command=treeview_completed_orders.yview)
+treeview_active_orders.config(yscrollcommand=scrollbar_active_order.set)
+treeview_completed_orders.config(yscrollcommand=scrollbar_completed_order.set)
 
 # Page Stock
 frame_page_stock = ttk.Frame(frame_right)
 button_add_goods = ttk.Button(frame_page_stock, text="新增商品")
 button_search_goods = ttk.Button(frame_page_stock, text="查找商品")
-button_list_goods = ttk.Button(frame_page_stock, text="列出商品")
+button_list_goods = ttk.Button(frame_page_stock, text="所有商品")
+button_outdate_goods = ttk.Button(frame_page_stock, text="过期商品")
 label_current_goods = ttk.Label(frame_page_stock, text="当前库存商品：")
 scrollbar_current_goods = ttk.Scrollbar(frame_page_stock)
 treeview_current_goods = ttk.Treeview(frame_page_stock,
@@ -140,10 +150,12 @@ treeview_current_goods.heading("成本", text="成本")
 button_add_goods.grid(column=0, row=0, sticky="w")
 button_search_goods.grid(column=1, row=0, sticky="w")
 button_list_goods.grid(column=2, row=0, sticky="w")
+button_outdate_goods.grid(column=3, row=0, sticky="w")
 label_current_goods.grid(column=0, row=1, columnspan=2, sticky="w")
-treeview_current_goods.grid(column=0, row=2, columnspan=4)
-scrollbar_current_goods.grid(column=4, row=2, sticky="nsw")
+treeview_current_goods.grid(column=0, row=2, columnspan=6)
+scrollbar_current_goods.grid(column=6, row=2, sticky="nsw")
 scrollbar_current_goods.config(command=treeview_current_goods.yview)
+treeview_current_goods.config(yscrollcommand=scrollbar_current_goods.set)
 
 # Page Customer
 frame_page_customer = ttk.Frame(frame_right)
@@ -183,6 +195,7 @@ label_current_customer.grid(column=0, row=1, columnspan=2, sticky="w")
 treeview_current_customer.grid(column=0, row=2, columnspan=4)
 scrollbar_current_customer.grid(column=4, row=2, sticky="nsw")
 scrollbar_current_customer.config(command=treeview_current_customer.yview)
+treeview_current_customer.config(yscrollcommand=scrollbar_current_customer.set)
 
 # Page courier
 frame_page_courier = ttk.Frame(frame_right)
@@ -224,6 +237,7 @@ label_current_courier.grid(column=0, row=1, columnspan=2, sticky="w")
 treeview_current_courier.grid(column=0, row=2, columnspan=4)
 scrollbar_current_courier.grid(column=4, row=2, sticky="nsw")
 scrollbar_current_courier.config(command=treeview_current_courier.yview)
+treeview_current_courier.config(yscrollcommand=scrollbar_current_courier.set)
 
 # Page administrator
 frame_page_administrator = ttk.Frame(frame_right)
@@ -264,6 +278,8 @@ treeview_current_administrator.grid(column=0, row=2, columnspan=5)
 scrollbar_current_administrator.grid(column=5, row=2, sticky="nsw")
 scrollbar_current_administrator.config(
     command=treeview_current_administrator.yview)
+treeview_current_administrator.config(
+    yscrollcommand=scrollbar_current_administrator.set)
 
 # Grid Frame
 frame_main.pack(side="left")
@@ -354,6 +370,41 @@ def good_list_all():
     # 列出所有管理员
     del_all_treeview(treeview_current_goods)
     rest = sy.search_good('all', '1', 0)
+    for item in rest:
+        treeview_current_goods.insert(
+            "",
+            0,
+            values=(item['gid'], item['productNumber'], item['name'],
+                    item['type'], item['expireDate'], item['createTime'],
+                    item['unit'], item['quantity'], item['price'],
+                    item['cost']))
+
+
+def order_list_all():
+    # 列出所有管理员
+    del_all_treeview(treeview_active_orders)
+    del_all_treeview(treeview_completed_orders)
+    rest = sy.search_order('all', '1', 0)
+    for item in rest:
+        if item['finishDate'] is None:
+            treeview_active_orders.insert(
+                "",
+                0,
+                values=(item['oid'], item['cuid'], item['amount'],
+                        item['createDate'], item['coid'], item['status']))
+        else:
+            treeview_completed_orders.insert(
+                "",
+                0,
+                values=(item['oid'], item['cuid'], item['amount'],
+                        item['createDate'], item['finishDate'], item['coid'],
+                        item['status']))
+
+
+def good_list_outdate():
+    # 列出所有过期商品
+    del_all_treeview(treeview_current_goods)
+    rest = sy.search_outdate_good()
     for item in rest:
         treeview_current_goods.insert(
             "",
@@ -558,6 +609,52 @@ def search_good_gui():
                                                                  sticky='W')
 
 
+def search_order_gui():
+    # 搜索栏
+    def search_order():
+        try:
+            del_all_treeview(treeview_active_orders)
+            del_all_treeview(treeview_completed_orders)
+            rest = sy.search_order(method_selected.get(), value.get(), 0)
+            for item in rest:
+                if item['finishDate'] is None:
+                    treeview_active_orders.insert(
+                        "",
+                        0,
+                        values=(item['oid'], item['cuid'], item['amount'],
+                                item['createDate'], item['coid'],
+                                item['status']))
+                else:
+                    treeview_completed_orders.insert(
+                        "",
+                        0,
+                        values=(item['oid'], item['cuid'], item['amount'],
+                                item['createDate'], item['finishDate'],
+                                item['coid'], item['status']))
+            switchPage(frame_page_order)
+            searchwindow.destroy()
+            messagebox.showinfo("Success", "Search out!")
+        except Exception as e:
+            messagebox.showerror("Error", e)
+
+    searchwindow = tk.Toplevel()
+    searchwindow.title('订单搜索')
+    searchwindow.geometry('350x30')
+    method_selected = tk.StringVar()
+    value = tk.StringVar()
+    comboxlist = ttk.Combobox(searchwindow, textvariable=method_selected)
+    comboxlist["values"] = ('oid', 'cuid', 'amount', 'status', 'coid',
+                            'createDate', 'finishDate')
+    comboxlist.current(0)
+    comboxlist.grid(row=0, sticky='W')
+    tk.Entry(searchwindow, textvariable=value).grid(row=0,
+                                                    column=1,
+                                                    sticky='W')
+    tk.Button(searchwindow, text="搜索", command=search_order).grid(row=0,
+                                                                  column=2,
+                                                                  sticky='W')
+
+
 def add_customer_gui():
     # 添加客户
     def add_customer():
@@ -695,6 +792,28 @@ def add_good_gui():
                                                            sticky='E')
 
 
+def add_order_gui():
+    # 添加订单
+    def add_order():
+        try:
+            del_all_treeview(treeview_active_orders)
+            sy.create_order(cuid.get())
+            messagebox.showinfo("Success", "Create a new order!")
+            addwindow.destroy()
+        except Exception as e:
+            messagebox.showerror("Error", e)
+
+    addwindow = tk.Toplevel()
+    addwindow.title('添加订单')
+    addwindow.geometry('220x180')
+    cuid = tk.StringVar()
+    tk.Label(addwindow, text='购买人ID：').grid(row=0, sticky='W')
+    tk.Entry(addwindow, textvariable=cuid).grid(row=0, column=1, sticky='W')
+    tk.Button(addwindow, text='提交', command=add_order).grid(row=6,
+                                                            column=1,
+                                                            sticky='E')
+
+
 def login():
     # 登录
     try:
@@ -739,6 +858,10 @@ button_search_courier.config(command=search_courier_gui)
 button_list_goods.config(command=good_list_all)
 button_add_goods.config(command=add_good_gui)
 button_search_goods.config(command=search_good_gui)
+button_outdate_goods.config(command=good_list_outdate)
+button_list_order.config(command=order_list_all)
+button_create_order.config(command=add_order_gui)
+button_search_order.config(command=search_order_gui)
 
 if __name__ == "__main__":
     window_login = tk.Toplevel()

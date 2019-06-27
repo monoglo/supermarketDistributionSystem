@@ -122,6 +122,35 @@ class System:
                 raise Exception('Error:No find such ' + method + '!')
             return goo
 
+    def search_outdate_good(self):
+        goo = self.mysql.select_outdate_good_multi('all', '1')
+        if goo == []:
+            raise Exception('Error:No find outdate goods !')
+        return goo
+
+    def create_order(self, cuid):
+        return self.mysql.add_order(cuid)
+
+    def add_order_item(self, oid, gid, productNumber, unit, quantity, price,
+                       amount):
+        self.mysql.add_order_item(oid, gid, productNumber, unit, quantity,
+                                  price, amount)
+
+    def search_order(self, method, value, is_singal):
+        if is_singal == 1:
+            orde = self.mysql.select_order_singal(method, value)
+            if orde == []:
+                raise Exception('Error:No such ' + method + '!')
+            return orde
+        else:
+            orde = self.mysql.select_order_multi(method, value)
+            if orde == []:
+                raise Exception('Error:No find such ' + method + '!')
+            return orde
+
+    def delete_order(self, oid):
+        self.mysql.delete_order(oid)
+
     def login(self, username, password, identity):
         if identity == 'administrator':
             admin = self.search_account_administrator('name', username, 1)
@@ -145,12 +174,13 @@ class System:
     def logout(self):
         self.logined = None
         self.logined_identity = 'logout'
+        self.mysql.close_conn()
 
 
 if __name__ == "__main__":
     sy = System()
     try:
-        a = sy.search_good('name', 'water', 0)
+        a = sy.create_order(1, 10.5)
         print(a)
     except Exception as e:
         print(e)
