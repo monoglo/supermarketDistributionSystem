@@ -177,7 +177,7 @@ class System:
         self.mysql.close_conn()
 
 
-if __name__ == "__main__":
+def test():
     sy = System()
     try:
         a = sy.create_order(1, 10.5)
@@ -185,3 +185,7 @@ if __name__ == "__main__":
     except Exception as e:
         print(e)
     sy.logout()
+
+
+if __name__ == "__main__":
+    test()

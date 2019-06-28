@@ -5,6 +5,8 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 
+selected_administrator = 0
+
 sy = system.System()  # 实例化System对象
 # Basic window settings
 root = tk.Tk()  # 根页面初始化
@@ -655,6 +657,90 @@ def search_order_gui():
                                                                   sticky='W')
 
 
+def delect_administrator():
+    try:
+        sy.delete_account_administrator(
+            treeview_current_administrator.item(selected_administrator)
+            ['values'][0])
+        messagebox.showinfo("Success", "Delcted a existed administrator!")
+    except Exception as e:
+        messagebox.showerror("Error", e)
+    del_all_treeview(treeview_current_administrator)
+    administrator_list_all()
+
+
+def modify_administrator_gui():
+    # 添加管理员
+    global selected_administrator
+
+    def modify_administrator():
+        try:
+            sy.update_account_administrator(
+                treeview_current_administrator.item(selected_administrator)
+                ['values'][0], name.get(), screenName.get(), email.get(),
+                phone.get(), adress.get(), password.get())
+            messagebox.showinfo("Success", "Modify a existed administrator!")
+            modifywindow.destroy()
+            del_all_treeview(treeview_current_administrator)
+            administrator_list_all()
+        except Exception as e:
+            messagebox.showerror("Error", e)
+
+    modifywindow = tk.Toplevel()
+    modifywindow.title('修改管理员')
+    modifywindow.geometry('220x180')
+    name = tk.StringVar()
+    screenName = tk.StringVar()
+    email = tk.StringVar()
+    phone = tk.StringVar()
+    adress = tk.StringVar()
+    password = tk.StringVar()
+    tk.Label(modifywindow, text='用户名：').grid(row=0, sticky='W')
+    tk.Entry(modifywindow, textvariable=name).grid(row=0, column=1, sticky='W')
+    tk.Label(modifywindow, text='昵称：').grid(row=1, sticky='W')
+    tk.Entry(modifywindow, textvariable=screenName).grid(row=1,
+                                                         column=1,
+                                                         sticky='W')
+    tk.Label(modifywindow, text='邮箱：').grid(row=2, sticky='W')
+    tk.Entry(modifywindow, textvariable=email).grid(row=2,
+                                                    column=1,
+                                                    sticky='W')
+    tk.Label(modifywindow, text='手机号码：').grid(row=3, sticky='W')
+    tk.Entry(modifywindow, textvariable=phone).grid(row=3,
+                                                    column=1,
+                                                    sticky='W')
+    tk.Label(modifywindow, text='地址：').grid(row=4, sticky='W')
+    tk.Entry(modifywindow, textvariable=adress).grid(row=4,
+                                                     column=1,
+                                                     sticky='W')
+    tk.Label(modifywindow, text='密码：').grid(row=5, sticky='W')
+    tk.Entry(modifywindow, show='*', textvariable=password).grid(row=5,
+                                                                 column=1,
+                                                                 sticky='W')
+    tk.Button(modifywindow, text='提交',
+              command=modify_administrator).grid(row=6, column=1, sticky='E')
+
+
+def right_click_administrator(event):
+    global selected_administrator
+    selected_administrator = treeview_current_administrator.identify_row(
+        event.y)
+    rightmenu = tk.Menu(root, tearoff=0)
+    rightmenu.add_command(label="修改", command=modify_administrator_gui)
+    rightmenu.add_command(label="删除", command=delect_administrator)
+    rightmenu.add_command(label="修改状态"
+                          """ , command=modify_administrator_status """)
+    if selected_administrator:
+        treeview_current_administrator.selection_set(selected_administrator)
+        treeview_current_administrator.focus_set()
+        treeview_current_administrator.focus(selected_administrator)
+        rightmenu.post(event.x_root, event.y_root)
+        return treeview_current_administrator.item(
+            selected_administrator)['values'][0]
+    else:
+        pass
+
+
 def add_customer_gui():
     # 添加客户
     def add_customer():
@@ -862,6 +948,8 @@ button_outdate_goods.config(command=good_list_outdate)
 button_list_order.config(command=order_list_all)
 button_create_order.config(command=add_order_gui)
 button_search_order.config(command=search_order_gui)
+
+treeview_current_administrator.bind('<Button-3>', right_click_administrator)
 
 if __name__ == "__main__":
     window_login = tk.Toplevel()
