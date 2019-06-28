@@ -25,8 +25,12 @@ Tkinter Tkinter.ttk Tkinter.messagebox
 │  │  ├─ ttkcalendar.py 日期选择器
 │  │  ├─ __init__.py
 │  ├─ tests 测试目录
+│  │  ├─ clock.py 时钟测试
+│  │  ├─ decorator.py 装饰器测试
+│  │  ├─ test.py Tkinter组件测试
 │  ├─ system.py 系统功能逻辑实现
 │  ├─ gui.py GUI实现，项目入口程序
+│  ├─ group.json 权限组
 │  ├─ __init__.py
 ├─ web web端，暂未实现
 ├─ docs 文档目录

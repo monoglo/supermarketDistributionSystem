@@ -94,7 +94,8 @@ class SupermarketDB(object):
             `password` = '%s',
             `group` = '%s'
             WHERE `aid` = '%s'
-            ''' % (name, screenName, email, phone, adress, password, group, aid)
+            ''' % (name, screenName, email, phone, adress, password, group,
+                   aid)
         return self.do_sql(sql)
 
     def select_administrator_singal(self, method, value):
@@ -337,7 +338,7 @@ class SupermarketDB(object):
 
 ########################################################
 
-    def add_comment(self, reader_id, news_id, content, status):
+    """ def add_comment(self, reader_id, news_id, content, status):
         # 举个栗子， 添加一条评论
         sql = '''
                 INSERT INTO `comments`
@@ -615,3 +616,4 @@ class SupermarketDB(object):
             ''' % reader_id
         rest = self.do_sql_multi(sql)
         return rest
+"""
