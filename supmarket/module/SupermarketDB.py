@@ -83,7 +83,7 @@ class SupermarketDB(object):
         return self.do_sql(sql)
 
     def update_administrator(self, aid, name, screenName, email, phone, adress,
-                             password):
+                             password, group):
         sql = '''
             UPDATE `administrators`
             SET `name` = '%s',
@@ -91,9 +91,10 @@ class SupermarketDB(object):
             `email` = '%s',
             `phone` = '%s',
             `adress` = '%s',
-            `password` = '%s'
+            `password` = '%s',
+            `group` = '%s'
             WHERE `aid` = '%s'
-            ''' % (name, screenName, email, phone, adress, password, aid)
+            ''' % (name, screenName, email, phone, adress, password, group, aid)
         return self.do_sql(sql)
 
     def select_administrator_singal(self, method, value):

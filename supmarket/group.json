@@ -1,0 +1,32 @@
+{
+    "Owner":{
+        "permission_node":[
+            "+.*"
+        ]
+    },
+    "Administrator":{
+        "permission_node":[
+            "-admin.delete",
+            "+.*"
+        ]
+    },
+    "logout":{
+        "permission_node":[
+            "+system.base.*",
+            "+admin.search"
+        ]
+    },
+    "Stockmanager":{
+        "permission_node":[
+            "+system.base.logout",
+            "+good.search"
+        ]
+    },
+    "StockOB":{
+        "permission_node":[
+            "+system.base.logout",
+            "+good.search",
+            "+order.search"
+        ]
+    }
+}

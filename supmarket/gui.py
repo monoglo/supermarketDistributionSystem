@@ -45,8 +45,11 @@ label_hw = ttk.Label(frame_page_welcome,
 label_welcome = ttk.Label(frame_page_welcome,
                           text='Welcome!',
                           font=("Source Han Serif", 18, "bold"))
+label_identity = ttk.Label(frame_page_welcome,
+                           font=("Source Han Serif", 18, "bold"))
 label_hw.pack()
 label_welcome.pack()
+label_identity.pack()
 
 # Order Page
 frame_page_order = ttk.Frame(frame_right)
@@ -330,91 +333,109 @@ def del_all_treeview(tree):
 
 def administrator_list_all():
     # 列出所有管理员
-    del_all_treeview(treeview_current_administrator)
-    rest = sy.search_account_administrator('all', '1', 0)
-    for item in rest:
-        treeview_current_administrator.insert(
-            "",
-            0,
-            values=(item['aid'], item['name'], item['screenName'],
-                    item['email'], item['phone'], item['adress'],
-                    item['group'], item['status']))
+    try:
+        del_all_treeview(treeview_current_administrator)
+        rest = sy.search_account_administrator('all', '1', 0)
+        for item in rest:
+            treeview_current_administrator.insert(
+                "",
+                0,
+                values=(item['aid'], item['name'], item['screenName'],
+                        item['email'], item['phone'], item['adress'],
+                        item['group'], item['status']))
+    except Exception as e:
+        messagebox.showerror("Error", e)
 
 
 def customer_list_all():
     # 列出所有管理员
-    del_all_treeview(treeview_current_customer)
-    rest = sy.search_account_customer('all', '1', 0)
-    for item in rest:
-        treeview_current_customer.insert(
-            "",
-            0,
-            values=(item['cuid'], item['name'], item['screenName'],
-                    item['email'], item['phone'], item['adress'],
-                    item['group'], item['balance'], item['status']))
+    try:
+        del_all_treeview(treeview_current_customer)
+        rest = sy.search_account_customer('all', '1', 0)
+        for item in rest:
+            treeview_current_customer.insert(
+                "",
+                0,
+                values=(item['cuid'], item['name'], item['screenName'],
+                        item['email'], item['phone'], item['adress'],
+                        item['group'], item['balance'], item['status']))
+    except Exception as e:
+        messagebox.showerror("Error", e)
 
 
 def courier_list_all():
     # 列出所有管理员
-    del_all_treeview(treeview_current_courier)
-    rest = sy.search_account_courier('all', '1', 0)
-    for item in rest:
-        treeview_current_courier.insert(
-            "",
-            0,
-            values=(item['coid'], item['name'], item['screenName'],
-                    item['email'], item['phone'], item['adress'],
-                    item['group'], item['deliveryTimes'], item['salary'],
-                    item['status']))
+    try:
+        del_all_treeview(treeview_current_courier)
+        rest = sy.search_account_courier('all', '1', 0)
+        for item in rest:
+            treeview_current_courier.insert(
+                "",
+                0,
+                values=(item['coid'], item['name'], item['screenName'],
+                        item['email'], item['phone'], item['adress'],
+                        item['group'], item['deliveryTimes'], item['salary'],
+                        item['status']))
+    except Exception as e:
+        messagebox.showerror("Error", e)
 
 
 def good_list_all():
     # 列出所有管理员
-    del_all_treeview(treeview_current_goods)
-    rest = sy.search_good('all', '1', 0)
-    for item in rest:
-        treeview_current_goods.insert(
-            "",
-            0,
-            values=(item['gid'], item['productNumber'], item['name'],
-                    item['type'], item['expireDate'], item['createTime'],
-                    item['unit'], item['quantity'], item['price'],
-                    item['cost']))
+    try:
+        del_all_treeview(treeview_current_goods)
+        rest = sy.search_good('all', '1', 0)
+        for item in rest:
+            treeview_current_goods.insert(
+                "",
+                0,
+                values=(item['gid'], item['productNumber'], item['name'],
+                        item['type'], item['expireDate'], item['createTime'],
+                        item['unit'], item['quantity'], item['price'],
+                        item['cost']))
+    except Exception as e:
+        messagebox.showerror("Error", e)
 
 
 def order_list_all():
     # 列出所有管理员
-    del_all_treeview(treeview_active_orders)
-    del_all_treeview(treeview_completed_orders)
-    rest = sy.search_order('all', '1', 0)
-    for item in rest:
-        if item['finishDate'] is None:
-            treeview_active_orders.insert(
-                "",
-                0,
-                values=(item['oid'], item['cuid'], item['amount'],
-                        item['createDate'], item['coid'], item['status']))
-        else:
-            treeview_completed_orders.insert(
-                "",
-                0,
-                values=(item['oid'], item['cuid'], item['amount'],
-                        item['createDate'], item['finishDate'], item['coid'],
-                        item['status']))
+    try:
+        del_all_treeview(treeview_active_orders)
+        del_all_treeview(treeview_completed_orders)
+        rest = sy.search_order('all', '1', 0)
+        for item in rest:
+            if item['finishDate'] is None:
+                treeview_active_orders.insert(
+                    "",
+                    0,
+                    values=(item['oid'], item['cuid'], item['amount'],
+                            item['createDate'], item['coid'], item['status']))
+            else:
+                treeview_completed_orders.insert(
+                    "",
+                    0,
+                    values=(item['oid'], item['cuid'], item['amount'],
+                            item['createDate'], item['finishDate'],
+                            item['coid'], item['status']))
+    except Exception as e:
+        messagebox.showerror("Error", e)
 
 
 def good_list_outdate():
     # 列出所有过期商品
-    del_all_treeview(treeview_current_goods)
-    rest = sy.search_outdate_good()
-    for item in rest:
-        treeview_current_goods.insert(
-            "",
-            0,
-            values=(item['gid'], item['productNumber'], item['name'],
-                    item['type'], item['expireDate'], item['createTime'],
-                    item['unit'], item['quantity'], item['price'],
-                    item['cost']))
+    try:
+        del_all_treeview(treeview_current_goods)
+        rest = sy.search_outdate_good()
+        for item in rest:
+            treeview_current_goods.insert(
+                "",
+                0,
+                values=(item['gid'], item['productNumber'], item['name'],
+                        item['type'], item['expireDate'], item['createTime'],
+                        item['unit'], item['quantity'], item['price'],
+                        item['cost']))
+    except Exception as e:
+        messagebox.showerror("Error", e)
 
 
 def search_administrator_gui():
@@ -437,21 +458,26 @@ def search_administrator_gui():
         except Exception as e:
             messagebox.showerror("Error", e)
 
-    searchwindow = tk.Toplevel()
-    searchwindow.title('管理员搜索')
-    searchwindow.geometry('350x30')
-    method_selected = tk.StringVar()
-    value = tk.StringVar()
-    comboxlist = ttk.Combobox(searchwindow, textvariable=method_selected)
-    comboxlist["values"] = ("name", "screenName", "email", "phone", "adress",
-                            "group", "status")
-    comboxlist.current(0)
-    comboxlist.grid(row=0, sticky='W')
-    tk.Entry(searchwindow, textvariable=value).grid(row=0,
-                                                    column=1,
-                                                    sticky='W')
-    tk.Button(searchwindow, text="搜索",
-              command=search_administrator).grid(row=0, column=2, sticky='W')
+    try:
+        searchwindow = tk.Toplevel()
+        searchwindow.title('管理员搜索')
+        searchwindow.geometry('350x30')
+        method_selected = tk.StringVar()
+        value = tk.StringVar()
+        comboxlist = ttk.Combobox(searchwindow, textvariable=method_selected)
+        comboxlist["values"] = ("name", "screenName", "email", "phone",
+                                "adress", "group", "status")
+        comboxlist.current(0)
+        comboxlist.grid(row=0, sticky='W')
+        tk.Entry(searchwindow, textvariable=value).grid(row=0,
+                                                        column=1,
+                                                        sticky='W')
+        tk.Button(searchwindow, text="搜索",
+                  command=search_administrator).grid(row=0,
+                                                     column=2,
+                                                     sticky='W')
+    except Exception as e:
+        messagebox.showerror("Error", e)
 
 
 def search_customer_gui():
@@ -474,21 +500,24 @@ def search_customer_gui():
         except Exception as e:
             messagebox.showerror("Error", e)
 
-    searchwindow = tk.Toplevel()
-    searchwindow.title('管理员搜索')
-    searchwindow.geometry('350x30')
-    method_selected = tk.StringVar()
-    value = tk.StringVar()
-    comboxlist = ttk.Combobox(searchwindow, textvariable=method_selected)
-    comboxlist["values"] = ("name", "screenName", "email", "phone", "adress",
-                            "group", "status")
-    comboxlist.current(0)
-    comboxlist.grid(row=0, sticky='W')
-    tk.Entry(searchwindow, textvariable=value).grid(row=0,
-                                                    column=1,
-                                                    sticky='W')
-    tk.Button(searchwindow, text="搜索",
-              command=search_customer).grid(row=0, column=2, sticky='W')
+    try:
+        searchwindow = tk.Toplevel()
+        searchwindow.title('管理员搜索')
+        searchwindow.geometry('350x30')
+        method_selected = tk.StringVar()
+        value = tk.StringVar()
+        comboxlist = ttk.Combobox(searchwindow, textvariable=method_selected)
+        comboxlist["values"] = ("name", "screenName", "email", "phone",
+                                "adress", "group", "status")
+        comboxlist.current(0)
+        comboxlist.grid(row=0, sticky='W')
+        tk.Entry(searchwindow, textvariable=value).grid(row=0,
+                                                        column=1,
+                                                        sticky='W')
+        tk.Button(searchwindow, text="搜索",
+                  command=search_customer).grid(row=0, column=2, sticky='W')
+    except Exception as e:
+        messagebox.showerror(e)
 
 
 def search_courier_gui():
@@ -511,22 +540,24 @@ def search_courier_gui():
         except Exception as e:
             messagebox.showerror("Error", e)
 
-    searchwindow = tk.Toplevel()
-    searchwindow.title('配送员搜索')
-    searchwindow.geometry('350x30')
-    method_selected = tk.StringVar()
-    value = tk.StringVar()
-    comboxlist = ttk.Combobox(searchwindow, textvariable=method_selected)
-    comboxlist["values"] = ("name", "screenName", "email", "phone", "adress",
-                            "group", "status")
-    comboxlist.current(0)
-    comboxlist.grid(row=0, sticky='W')
-    tk.Entry(searchwindow, textvariable=value).grid(row=0,
-                                                    column=1,
-                                                    sticky='W')
-    tk.Button(searchwindow, text="搜索", command=search_courier).grid(row=0,
-                                                                    column=2,
-                                                                    sticky='W')
+    try:
+        searchwindow = tk.Toplevel()
+        searchwindow.title('配送员搜索')
+        searchwindow.geometry('350x30')
+        method_selected = tk.StringVar()
+        value = tk.StringVar()
+        comboxlist = ttk.Combobox(searchwindow, textvariable=method_selected)
+        comboxlist["values"] = ("name", "screenName", "email", "phone",
+                                "adress", "group", "status")
+        comboxlist.current(0)
+        comboxlist.grid(row=0, sticky='W')
+        tk.Entry(searchwindow, textvariable=value).grid(row=0,
+                                                        column=1,
+                                                        sticky='W')
+        tk.Button(searchwindow, text="搜索",
+                  command=search_courier).grid(row=0, column=2, sticky='W')
+    except Exception as e:
+        messagebox.showerror(e)
 
 
 def add_administrator_gui():
@@ -542,34 +573,44 @@ def add_administrator_gui():
         except Exception as e:
             messagebox.showerror("Error", e)
 
-    addwindow = tk.Toplevel()
-    addwindow.title('添加管理员')
-    addwindow.geometry('220x180')
-    name = tk.StringVar()
-    screenName = tk.StringVar()
-    email = tk.StringVar()
-    phone = tk.StringVar()
-    adress = tk.StringVar()
-    password = tk.StringVar()
-    tk.Label(addwindow, text='用户名：').grid(row=0, sticky='W')
-    tk.Entry(addwindow, textvariable=name).grid(row=0, column=1, sticky='W')
-    tk.Label(addwindow, text='昵称：').grid(row=1, sticky='W')
-    tk.Entry(addwindow, textvariable=screenName).grid(row=1,
+    try:
+        addwindow = tk.Toplevel()
+        addwindow.title('添加管理员')
+        addwindow.geometry('220x180')
+        name = tk.StringVar()
+        screenName = tk.StringVar()
+        email = tk.StringVar()
+        phone = tk.StringVar()
+        adress = tk.StringVar()
+        password = tk.StringVar()
+        tk.Label(addwindow, text='用户名：').grid(row=0, sticky='W')
+        tk.Entry(addwindow, textvariable=name).grid(row=0,
+                                                    column=1,
+                                                    sticky='W')
+        tk.Label(addwindow, text='昵称：').grid(row=1, sticky='W')
+        tk.Entry(addwindow, textvariable=screenName).grid(row=1,
+                                                          column=1,
+                                                          sticky='W')
+        tk.Label(addwindow, text='邮箱：').grid(row=2, sticky='W')
+        tk.Entry(addwindow, textvariable=email).grid(row=2,
+                                                     column=1,
+                                                     sticky='W')
+        tk.Label(addwindow, text='手机号码：').grid(row=3, sticky='W')
+        tk.Entry(addwindow, textvariable=phone).grid(row=3,
+                                                     column=1,
+                                                     sticky='W')
+        tk.Label(addwindow, text='地址：').grid(row=4, sticky='W')
+        tk.Entry(addwindow, textvariable=adress).grid(row=4,
                                                       column=1,
                                                       sticky='W')
-    tk.Label(addwindow, text='邮箱：').grid(row=2, sticky='W')
-    tk.Entry(addwindow, textvariable=email).grid(row=2, column=1, sticky='W')
-    tk.Label(addwindow, text='手机号码：').grid(row=3, sticky='W')
-    tk.Entry(addwindow, textvariable=phone).grid(row=3, column=1, sticky='W')
-    tk.Label(addwindow, text='地址：').grid(row=4, sticky='W')
-    tk.Entry(addwindow, textvariable=adress).grid(row=4, column=1, sticky='W')
-    tk.Label(addwindow, text='密码：').grid(row=5, sticky='W')
-    tk.Entry(addwindow, show='*', textvariable=password).grid(row=5,
-                                                              column=1,
-                                                              sticky='W')
-    tk.Button(addwindow, text='提交', command=add_administrator).grid(row=6,
-                                                                    column=1,
-                                                                    sticky='E')
+        tk.Label(addwindow, text='密码：').grid(row=5, sticky='W')
+        tk.Entry(addwindow, show='*', textvariable=password).grid(row=5,
+                                                                  column=1,
+                                                                  sticky='W')
+        tk.Button(addwindow, text='提交',
+                  command=add_administrator).grid(row=6, column=1, sticky='E')
+    except Exception as e:
+        messagebox.showerror(e)
 
 
 def search_good_gui():
@@ -592,23 +633,25 @@ def search_good_gui():
         except Exception as e:
             messagebox.showerror("Error", e)
 
-    searchwindow = tk.Toplevel()
-    searchwindow.title('库存搜索')
-    searchwindow.geometry('350x30')
-    method_selected = tk.StringVar()
-    value = tk.StringVar()
-    comboxlist = ttk.Combobox(searchwindow, textvariable=method_selected)
-    comboxlist["values"] = ('gid', 'productNumber', 'name', 'type',
-                            'expireDate', 'createTime', 'unit', 'quantity',
-                            'price', 'cost')
-    comboxlist.current(0)
-    comboxlist.grid(row=0, sticky='W')
-    tk.Entry(searchwindow, textvariable=value).grid(row=0,
-                                                    column=1,
-                                                    sticky='W')
-    tk.Button(searchwindow, text="搜索", command=search_good).grid(row=0,
-                                                                 column=2,
-                                                                 sticky='W')
+    try:
+        searchwindow = tk.Toplevel()
+        searchwindow.title('库存搜索')
+        searchwindow.geometry('350x30')
+        method_selected = tk.StringVar()
+        value = tk.StringVar()
+        comboxlist = ttk.Combobox(searchwindow, textvariable=method_selected)
+        comboxlist["values"] = ('gid', 'productNumber', 'name', 'type',
+                                'expireDate', 'createTime', 'unit', 'quantity',
+                                'price', 'cost')
+        comboxlist.current(0)
+        comboxlist.grid(row=0, sticky='W')
+        tk.Entry(searchwindow, textvariable=value).grid(row=0,
+                                                        column=1,
+                                                        sticky='W')
+        tk.Button(searchwindow, text="搜索",
+                  command=search_good).grid(row=0, column=2, sticky='W')
+    except Exception as e:
+        messagebox.showerror(e)
 
 
 def search_order_gui():
@@ -639,22 +682,24 @@ def search_order_gui():
         except Exception as e:
             messagebox.showerror("Error", e)
 
-    searchwindow = tk.Toplevel()
-    searchwindow.title('订单搜索')
-    searchwindow.geometry('350x30')
-    method_selected = tk.StringVar()
-    value = tk.StringVar()
-    comboxlist = ttk.Combobox(searchwindow, textvariable=method_selected)
-    comboxlist["values"] = ('oid', 'cuid', 'amount', 'status', 'coid',
-                            'createDate', 'finishDate')
-    comboxlist.current(0)
-    comboxlist.grid(row=0, sticky='W')
-    tk.Entry(searchwindow, textvariable=value).grid(row=0,
-                                                    column=1,
-                                                    sticky='W')
-    tk.Button(searchwindow, text="搜索", command=search_order).grid(row=0,
-                                                                  column=2,
-                                                                  sticky='W')
+    try:
+        searchwindow = tk.Toplevel()
+        searchwindow.title('订单搜索')
+        searchwindow.geometry('350x30')
+        method_selected = tk.StringVar()
+        value = tk.StringVar()
+        comboxlist = ttk.Combobox(searchwindow, textvariable=method_selected)
+        comboxlist["values"] = ('oid', 'cuid', 'amount', 'status', 'coid',
+                                'createDate', 'finishDate')
+        comboxlist.current(0)
+        comboxlist.grid(row=0, sticky='W')
+        tk.Entry(searchwindow, textvariable=value).grid(row=0,
+                                                        column=1,
+                                                        sticky='W')
+        tk.Button(searchwindow, text="搜索",
+                  command=search_order).grid(row=0, column=2, sticky='W')
+    except Exception as e:
+        messagebox.showerror(e)
 
 
 def delect_administrator():
@@ -678,7 +723,7 @@ def modify_administrator_gui():
             sy.update_account_administrator(
                 treeview_current_administrator.item(selected_administrator)
                 ['values'][0], name.get(), screenName.get(), email.get(),
-                phone.get(), adress.get(), password.get())
+                phone.get(), adress.get(), password.get(), group.get())
             messagebox.showinfo("Success", "Modify a existed administrator!")
             modifywindow.destroy()
             del_all_treeview(treeview_current_administrator)
@@ -694,6 +739,7 @@ def modify_administrator_gui():
     email = tk.StringVar()
     phone = tk.StringVar()
     adress = tk.StringVar()
+    group = tk.StringVar()
     password = tk.StringVar()
     tk.Label(modifywindow, text='用户名：').grid(row=0, sticky='W')
     tk.Entry(modifywindow, textvariable=name).grid(row=0, column=1, sticky='W')
@@ -713,8 +759,12 @@ def modify_administrator_gui():
     tk.Entry(modifywindow, textvariable=adress).grid(row=4,
                                                      column=1,
                                                      sticky='W')
-    tk.Label(modifywindow, text='密码：').grid(row=5, sticky='W')
-    tk.Entry(modifywindow, show='*', textvariable=password).grid(row=5,
+    tk.Label(modifywindow, text='用户组：').grid(row=5, sticky='W')
+    tk.Entry(modifywindow, textvariable=group).grid(row=5,
+                                                    column=1,
+                                                    sticky='W')
+    tk.Label(modifywindow, text='密码：').grid(row=6, sticky='W')
+    tk.Entry(modifywindow, show='*', textvariable=password).grid(row=6,
                                                                  column=1,
                                                                  sticky='W')
     tk.Button(modifywindow, text='提交',
@@ -723,22 +773,26 @@ def modify_administrator_gui():
 
 def right_click_administrator(event):
     global selected_administrator
-    selected_administrator = treeview_current_administrator.identify_row(
-        event.y)
-    rightmenu = tk.Menu(root, tearoff=0)
-    rightmenu.add_command(label="修改", command=modify_administrator_gui)
-    rightmenu.add_command(label="删除", command=delect_administrator)
-    rightmenu.add_command(label="修改状态"
-                          """ , command=modify_administrator_status """)
-    if selected_administrator:
-        treeview_current_administrator.selection_set(selected_administrator)
-        treeview_current_administrator.focus_set()
-        treeview_current_administrator.focus(selected_administrator)
-        rightmenu.post(event.x_root, event.y_root)
-        return treeview_current_administrator.item(
-            selected_administrator)['values'][0]
-    else:
-        pass
+    try:
+        selected_administrator = treeview_current_administrator.identify_row(
+            event.y)
+        rightmenu = tk.Menu(root, tearoff=0)
+        rightmenu.add_command(label="修改", command=modify_administrator_gui)
+        rightmenu.add_command(label="删除", command=delect_administrator)
+        rightmenu.add_command(label="修改状态"
+                              """ , command=modify_administrator_status """)
+        if selected_administrator:
+            treeview_current_administrator.selection_set(
+                selected_administrator)
+            treeview_current_administrator.focus_set()
+            treeview_current_administrator.focus(selected_administrator)
+            rightmenu.post(event.x_root, event.y_root)
+            return treeview_current_administrator.item(
+                selected_administrator)['values'][0]
+        else:
+            pass
+    except Exception as e:
+        messagebox.showerror(e)
 
 
 def add_customer_gui():
@@ -905,6 +959,7 @@ def login():
     try:
         sy.login(entry_username.get(), entry_password.get(), 'administrator')
         label_welcome['text'] = 'Welcome ' + sy.logined['screenName'] + '!'
+        label_identity['text'] = '您的用户组为' + sy.logined['group']
         window_login.destroy()
         root.deiconify()
     except Exception as e:
